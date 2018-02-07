@@ -17,7 +17,9 @@ function chunk(a, l) {
 function processImageData(imageData) {
     const rgb = chunk(imageData, 4);
     const hsl = rgb.map(rgb => rgbToHsl(...rgb));
-    console.log(rgb, hsl);
+    const colors = hsl.map(([h, s, l]) => `hsl(${h}, ${s}%, ${l}%)`);
+    console.log(colors);
+    setInterval(() => document.body.style.backgroundColor = colors[Math.floor(Math.random() * 250000)], 1000)
 }
 
 /**
@@ -52,6 +54,6 @@ function rgbToHsl(r, g, b) {
         h /= 6;
     }
 
-    return [h, s, l];
+    return [h * 360, s * 100, l * 100];
 }
 window.onload = drawImage;
