@@ -1,3 +1,23 @@
+/**
+ * sabithpocker@gmail.com
+ */
+function init() {
+    drawImage();
+    detectEyeMovements();
+}
+
+function detectEyeMovements() {
+    webgazer.setGazeListener(function (data, elapsedTime) {
+        console.log(data);
+        if (data == null) {
+            return;
+        }
+        var xprediction = data.x; //these x coordinates are relative to the viewport 
+        var yprediction = data.y; //these y coordinates are relative to the viewport
+        console.log(elapsedTime); //elapsed time is based on time since begin was called
+    }).begin();
+}
+
 function drawImage() {
     var ctx = document.getElementById('canvas').getContext('2d');
     var img = new Image();
@@ -9,9 +29,9 @@ function drawImage() {
     img.src = 'img/i.jpg';
 }
 
-function chunk(a, l) { 
+function chunk(a, l) {
     return new Array(Math.ceil(a.length / l)).fill(0)
-        .map((_, n) => a.slice(n*l, n*l + l - 1)); 
+        .map((_, n) => a.slice(n * l, n * l + l - 1));
 }
 
 function processImageData(imageData) {
@@ -56,4 +76,4 @@ function rgbToHsl(r, g, b) {
 
     return [h * 360, s * 100, l * 100];
 }
-window.onload = drawImage;
+window.onload = init();
